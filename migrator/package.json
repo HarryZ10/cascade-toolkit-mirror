@@ -1,0 +1,14 @@
+{
+  "name": "db_migrator",
+  "version": "1.0.0",
+  "scripts": {
+    "migrate": "sequelize db:migrate"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "pg": "^8.7.1",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.6.5",
+    "sequelize-cli": "^6.2.0"
+  }
+}
