@@ -4,10 +4,14 @@ services:
     container_name: pgsql
     image: postgres:14.1-alpine
     environment:
+      - DB_HOST=host.docker.internal
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=public
     ports:
       - '5432:5432'
+    expose:
+      - '5432'
     volumes:
       - ./pgsql:/var/lib/postgresql/data
   # backend:
@@ -30,11 +34,11 @@ services:
   #     - '8080:8080'
   #   depends_on:
   #     - backend
-  # db-migrator:
-  #   container_name: db_migrator
-  #   build:
-  #     context: ./migrator
-  #   depends_on:
-  #     - pgsql
-  #   environment:
-  #     - DATABASE_URL=postgres://postgres:postgres@pgsql:5432/yourdbname
+  db-migrator:
+    container_name: db_migrator
+    build:
+      context: ./migrator
+    depends_on:
+      - pgsql
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@pgsql:5432/postgres

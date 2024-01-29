@@ -1,12 +1,15 @@
 // models/user.js
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../sequelize'; // Your sequelize configuration
+const { Model, DataTypes } = require('sequelize');
+const sequelize = require('sequelize');
 
 class User extends Model {}
 
 User.init({
-    email: DataTypes.STRING,
-    isEditor: DataTypes.BOOLEAN,
+    email: {
+        primaryKey: true,
+        type: DataTypes.STRING
+    },
+    username: DataTypes.STRING,
 }, { sequelize, modelName: 'user' });
 
-export default User;
+module.exports = User;
