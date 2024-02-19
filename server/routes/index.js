@@ -4,7 +4,6 @@ const express = require('express');
 const Cascade = require('cascade-api-node');
 const CascadeAuth = require('../credentials.js');
 const cascadeAPI = new Cascade('https://cascade.georgefox.edu', CascadeAuth);
-// const fs = require('fs');
 
 const router = express.Router();
 
@@ -13,8 +12,8 @@ router.get('/page/:id', async function(req, res, next) {
     const pageId = req.params.id;
 
     // Convert start and end timestamps from query to Date
-    const startTime = new Date(parseInt(req.query.start) * 1000);
-    const endTime = new Date(parseInt(req.query.end) * 1000);
+    const startTime = new Date(req.query.startTime).getTime();
+    const endTime = new Date(req.query.endTime).getTime();
 
     // Read the page details using the ID
     const pageResponse = await cascadeAPI.APICall('read', 'page', pageId)
@@ -69,12 +68,12 @@ router.get('/page/:id', async function(req, res, next) {
                 const blockResponse = await cascadeAPI.readBlock(`www Redesign/${blockPath}`);
 
                 // Get the last modified date
-                const blockModifiedDate = new Date(blockResponse.asset.xhtmlDataDefinitionBlock.lastModifiedDate);
+                const blockModifiedDate = new Date(blockResponse.asset.xhtmlDataDefinitionBlock.lastModifiedDate).getTime();
 
                 // if our latest modified date from the page is older, then we update it with the
                 // block updated date
                 if (blockModifiedDate > response.lastModifiedDate) {
-                    response.lastModifiedDate = blockModifiedDate;
+                    response.lastModifiedDate = new Date(blockModifiedDate);
                     response.editor = blockResponse.asset.xhtmlDataDefinitionBlock.lastModifiedBy;
                     response.lastEditedBlock = blockPath;
                 }
@@ -89,7 +88,7 @@ router.get('/page/:id', async function(req, res, next) {
                         blockId: blockResponse.asset.xhtmlDataDefinitionBlock.id,
                         cascadeLink: `https://cascade.georgefox.edu/entity/open.act?id=${blockId}&type=block`,
                         blockPath: blockPath,
-                        lastModifiedDate: blockModifiedDate,
+                        lastModifiedDate: new Date(blockModifiedDate),
                         editor: blockResponse.asset.xhtmlDataDefinitionBlock.lastModifiedBy,
                     });
                 }
