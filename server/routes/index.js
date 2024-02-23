@@ -83,6 +83,7 @@ router.get('/page/:id', async function(req, res, next) {
                 // if the block modified time is within the specified time period
                 // then we update the response block appropriately
                 if (blockModifiedDate >= startTime && blockModifiedDate <= endTime) {
+                    console.log(new Date(blockModifiedDate).getTime());
                     response.modified = true;
                     response.modifiedBlocks.push({
                         blockId: blockResponse.asset.xhtmlDataDefinitionBlock.id,
@@ -100,6 +101,10 @@ router.get('/page/:id', async function(req, res, next) {
 
     // Return the response to client
     res.status(200).send(response);
+});
+
+router.get('/pages', async function(req, res, next) {
+    res.status(200).send(res);
 });
 
 module.exports = router;
