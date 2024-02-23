@@ -1,28 +1,30 @@
 <template>
   <div>
-    <form @submit.prevent="handleSubmit">
-      <label for="pageId">Enter Page ID: </label>
-      <input id="pageId" v-model="form.pageId" type="text" required><br/><br/>
+        <form @submit.prevent="handleSubmit">
+            <label for="pageId">Enter Page ID: </label>
+            <input id="pageId" v-model="form.pageId" type="text" required>
+            <br/><br/>
 
-      <label for="date">Enter Timeframe: </label>
-      <VueDatePicker
-        range
-        v-model="form.date"
-        class="dp-date-menu"
-        @change="onDateChange"
-        :enable-time-picker="false"
-      />
+            <label for="date">Enter Timeframe: </label>
+            <VueDatePicker
+                range
+                v-model="form.date"
+                class="dp-date-menu"
+                @change="onDateChange"
+                :enable-time-picker="false"
+            />
 
-      <button type="submit">Fetch Page Details</button>
-    </form>
+        <button type="submit">Fetch Page Details</button>
+        </form>
 
-    <div v-if="pageDetails.pagePath">
-      <p>{{ pageDetails.pagePath }}</p>
-      <p>Last modified by: {{ pageDetails.editor }}</p>
-      <p>Last modified date: {{ pageDetails.lastModifiedDate }}</p>
-    </div>
+        <div v-if="pageDetails.pagePath">
+            <p>Modified: {{ pageDetails.modified }}</p>
+            <p>{{ pageDetails.pagePath }}</p>
+            <p>Last modified by: {{ pageDetails.editor }}</p>
+            <p>Last modified date: {{ pageDetails.lastModifiedDate }}</p>
+        </div>
     <p v-if="error">{{ error }}</p>
-  </div>
+    </div>
 </template>
 
 <script>
