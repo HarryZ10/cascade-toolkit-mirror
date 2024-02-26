@@ -15,16 +15,16 @@ services:
     volumes:
       - ./pgsql:/var/lib/postgresql/data
 
-  backend:
-    container_name: node_server
-    build:
-      context: ./server
-    volumes:
-      - ./server:/app
-    ports:
-      - '3001:3001'
-    depends_on:
-      - pgsql
+  # backend:
+  #   container_name: node_server
+  #   build:
+  #     context: ./server
+  #   volumes:
+  #     - ./server:/app
+  #   ports:
+  #     - '3001:3001'
+  #   depends_on:
+  #     - pgsql
 
   vue-client:
     container_name: vue_client
@@ -34,8 +34,8 @@ services:
       - ./cascade-playground-platform:/app
     ports:
       - '8080:8080'
-    depends_on:
-      - backend
+    # depends_on:
+    #   - backend
 
   db-migrator:
     container_name: db_migrator

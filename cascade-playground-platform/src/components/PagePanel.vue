@@ -1,11 +1,11 @@
 <template>
   <div>
         <form @submit.prevent="handleSubmit">
-            <label for="pageId">Enter Page ID: </label>
+            <label for="pageId" id="submitLabel">Enter Page ID: </label>
             <input id="pageId" v-model="form.pageId" type="text" required>
             <br/><br/>
 
-            <label for="date">Enter Timeframe: </label>
+            <label for="date" id="submitLabel">Enter Timeframe: </label>
             <VueDatePicker
                 range
                 v-model="form.date"
@@ -14,7 +14,12 @@
                 :enable-time-picker="false"
             />
 
-        <button type="submit">Fetch Page Details</button>
+        <button
+            class="btn btn-primary"
+            type="submit"
+        >
+            Fetch Page Details
+        </button>
         </form>
 
         <div v-if="pageDetails.pagePath">
@@ -22,7 +27,14 @@
             <p>{{ pageDetails.pagePath }}</p>
             <p>Last modified by: {{ pageDetails.editor }}</p>
             <p>Last modified date: {{ pageDetails.lastModifiedDate }}</p>
+            <p>Last modified block: {{ pageDetails.lastEditedBlock }}</p>
         </div>
+
+        <div>
+            <p>Blocks</p>
+
+        </div>
+
     <p v-if="error">{{ error }}</p>
     </div>
 </template>
@@ -60,6 +72,7 @@ export default {
                 }
                 const data = await response.json();
                 this.pageDetails = data;
+                console.log(this.pageDetails);
             } catch (error) {
                 this.error = error.toString();
             }
@@ -82,6 +95,10 @@ export default {
   width: 50%;
   margin: 0 auto;
   padding-bottom: 20px;
+}
+
+#submitLabel {
+    padding-right: 10px;
 }
 
 </style>
