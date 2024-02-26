@@ -32,7 +32,14 @@
 
         <div>
             <p>Blocks</p>
-
+            <ul>
+                <li
+                    v-for="block in blocks"
+                    :key="block.blockId"
+                >
+                    {{ block }}
+                </li>
+            </ul>
         </div>
 
     <p v-if="error">{{ error }}</p>
@@ -57,6 +64,7 @@ export default {
                 ],
             },
             pageDetails: {},
+            blocks: [],
             error: null,
         };
     },
@@ -72,7 +80,9 @@ export default {
                 }
                 const data = await response.json();
                 this.pageDetails = data;
-                console.log(this.pageDetails);
+                this.blocks = this.pageDetails.modifiedBlocks;
+
+                console.log(this.blocks);
             } catch (error) {
                 this.error = error.toString();
             }
