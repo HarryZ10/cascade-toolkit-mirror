@@ -1,17 +1,16 @@
 <template>
   <div>
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <PagePanel/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import PagePanel from './components/PagePanel.vue';
 
 export default {
     name: 'App',
     components: {
-        HelloWorld,
+        PagePanel,
     },
 };
 </script>
@@ -24,5 +23,9 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+
+a {
+  text-decoration: none;
 }
 </style>
