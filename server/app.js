@@ -10,11 +10,30 @@ const createError = require('http-errors');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const cors = require('cors');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
 const app = express();
+app.use(cors());
+
+// Add allow origin headers before the routes are defined
+app.use(function(req, res, next) {
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080');
+    res.setHeader(
+        'Access-Control-Allow-Methods',
+        'GET, POST, OPTIONS, PUT, PATCH, DELETE',
+    );
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'X-Requested-With,content-type',
+    );
+
+    // Pass to next layer of middleware
+    next();
+});
 
 /**
  * Get port from environment and store in Express.
@@ -31,7 +50,7 @@ const server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 server.listen(port);
-server.on('error', onError);
+// server.on('error', onError);
 server.on('listening', onListening);
 
 // Name the logging device called "dev"
