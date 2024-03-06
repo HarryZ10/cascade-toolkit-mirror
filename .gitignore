@@ -4,4 +4,4 @@ pgsql
 node_modules
 **/node_modules
 migrator/node_modules
-credentials.js
+# credentials.js
