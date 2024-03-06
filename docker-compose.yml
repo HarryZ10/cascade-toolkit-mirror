@@ -1,30 +1,32 @@
 version: '3.8'
 services:
-  pgsql:
-    container_name: pgsql
-    image: postgres:14.1-alpine
-    environment:
-      - DB_HOST=host.docker.internal
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=public
-    ports:
-      - '5432:5432'
-    expose:
-      - '5432'
-    volumes:
-      - ./pgsql:/var/lib/postgresql/data
-
-  # backend:
-  #   container_name: node_server
-  #   build:
-  #     context: ./server
-  #   volumes:
-  #     - ./server:/app
+  # pgsql:
+  #   container_name: pgsql
+  #   image: postgres:14.1-alpine
+  #   environment:
+  #     - DB_HOST=host.docker.internal
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=postgres
+  #     - POSTGRES_DB=public
   #   ports:
-  #     - '3001:3001'
-  #   depends_on:
-  #     - pgsql
+  #     - '5432:5432'
+  #   expose:
+  #     - '5432'
+  #   volumes:
+  #     - ./pgsql:/var/lib/postgresql/data
+
+  backend:
+      container_name: node_server
+      environment:
+        - USER_API_KEY=${USER_API_KEY}
+      build:
+        context: ./server
+      volumes:
+        - ./server:/app
+      ports:
+        - '3001:3001'
+      # depends_on:
+      #   - pgsql
 
   vue-client:
     container_name: vue_client
@@ -34,14 +36,14 @@ services:
       - ./cascade-playground-platform:/app
     ports:
       - '8080:8080'
-    # depends_on:
-    #   - backend
-
-  db-migrator:
-    container_name: db_migrator
-    build:
-      context: ./migrator
     depends_on:
-      - pgsql
-    environment:
-      - DATABASE_URL=postgres://postgres:postgres@pgsql:5432/postgres
+      - backend
+
+  # db-migrator:
+  #   container_name: db_migrator
+  #   build:
+  #     context: ./migrator
+  #   depends_on:
+  #     - pgsql
+  #   environment:
+  #     - DATABASE_URL=postgres://postgres:postgres@pgsql:5432/postgres
