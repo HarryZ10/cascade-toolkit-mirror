@@ -17,7 +17,9 @@ module.exports = {
     'rules': {
         'indent': ['error', 4],
         'linebreak-style': [
-            'error', process.platform === 'win32' ? 'windows' : 'unix',
+            // unix is not included - best practice is use environment variable
+            // n.b., NODE_PLATFORM=windows
+            'error', 'windows' 
         ],
     },
 };
