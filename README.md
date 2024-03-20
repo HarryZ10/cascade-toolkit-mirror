@@ -1,12 +1,8 @@
 ## REQUIRED SETUP
 In `.env` must copy and paste your API key
 
+Example
 ```
-USER_API_KEY=[STRAIGHT_COPY_PASTE]
+USER_API_KEY=alkJFLkfjksdfj32l2ekjsdsfd
 ```
-
-Erase brackets as well
-
-## Create new migrations
-
-* Run command in `migrator/`: `npx sequelize-cli migration:generate --name create-user`
+Example key is not real
