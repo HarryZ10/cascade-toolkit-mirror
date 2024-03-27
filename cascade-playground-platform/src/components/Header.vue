@@ -1,6 +1,6 @@
 <template>
-    <CHeader position="fixed">
-        <CHeaderBrand href="#">CAPE Tool</CHeaderBrand>
+    <CHeader id="header-nav" position="fixed">
+        <CHeaderBrand id="header" href="#">CAPE Tool</CHeaderBrand>
     </CHeader>
 
 </template>
@@ -21,3 +21,18 @@ export default {
 };
 
 </script>
+
+<style scoped>
+#header {
+    padding: 15px;
+}
+
+#header-nav {
+    background-color: #223442;
+}
+
+a#header.header-brand {
+    height: 100%;
+    color: #ddd;
+}
+</style>

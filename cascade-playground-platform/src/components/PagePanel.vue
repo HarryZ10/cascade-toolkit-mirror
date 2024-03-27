@@ -1,3 +1,4 @@
+<!-- eslint-disable object-curly-spacing -->
 <!-- eslint-disable max-len -->
 <template>
   <div class="container">
@@ -22,6 +23,7 @@
                 range
                 v-model="form.date"
                 class="dp-date-menu"
+                week-start="0"
                 @change="onDateChange"
                 :enable-time-picker="false"
             />
@@ -32,7 +34,7 @@
             </button>
         </form>
 
-        <div class="container" v-if="pagesResponse && pagesResponse.length">
+        <div class="container results" v-if="pagesResponse && pagesResponse.length">
             <div class="accordion accordion-flush" id="accordionExample">
                 <div class="accordion-item"
                     v-for="(item, index) in pagesResponse"
@@ -162,16 +164,22 @@
         </div>
 
         <p style="margin-top: 4rem" v-if="error">{{ error }}</p>
+        <Toaster />
     </div>
 </template>
 
 <script>
 import VueDatePicker from '@vuepic/vue-datepicker';
+// eslint-disable-next-line object-curly-spacing
+import { Toaster, toast } from '@steveyuowo/vue-hot-toast';
+
+import '@steveyuowo/vue-hot-toast/vue-hot-toast.css';
 import '@vuepic/vue-datepicker/dist/main.css';
 
 export default {
     components: {
         VueDatePicker,
+        Toaster,
     },
     name: 'PagePanel',
     data() {
@@ -190,6 +198,10 @@ export default {
     },
     methods: {
         async fetchPageDetails() {
+            const id = toast.loading('Loading...', {
+                autoClose: false,
+            });
+
             try {
                 const settings = {
                     method: 'POST',
@@ -211,15 +223,33 @@ export default {
                 if (response.ok) {
                     const data = await response.json();
                     this.pagesResponse = data ?? [];
-                    console.log(this.pagesResponse);
+
                     if (this.pagesResponse.length === 0) {
                         this.error = 'Query has no results.';
+                    } else {
+                        toast.update(id, {
+                            type: 'success',
+                            message: 'Successfully queried page information!',
+                            autoClose: true,
+                            duration: 5000,
+                        });
                     }
                 } else {
-                    alert('Something went wrong!');
+                    toast.update(id, {
+                        type: 'error',
+                        message: 'Something went wrong',
+                        autoClose: true,
+                        duration: 5000,
+                    });
                 }
             } catch (error) {
                 this.error = error.toString();
+                toast.update(id, {
+                    type: 'error',
+                    message: 'See message below for error.',
+                    autoClose: true,
+                    duration: 5000,
+                });
             }
         },
 
@@ -271,6 +301,10 @@ pre {
 
 #textAreaInput {
     width: 30%;
+}
+
+.container.results {
+    margin-bottom: 100px;
 }
 
 </style>
