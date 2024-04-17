@@ -1,8 +1,5 @@
 FROM node:21
 
-# Install Vue CLI globally
-RUN npm install -g @vue/cli-service
-
 WORKDIR /app
 
 # Install app dependencies

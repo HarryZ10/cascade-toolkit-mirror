@@ -226,6 +226,13 @@ export default {
 
                     if (this.pagesResponse.length === 0) {
                         this.error = 'Query has no results.';
+                        toast.update(id, {
+                            type: 'error',
+                            // eslint-disable-next-line max-len
+                            message: 'Something went wrong. Check below for details.',
+                            autoClose: true,
+                            duration: 5000,
+                        });
                     } else {
                         toast.update(id, {
                             type: 'success',
