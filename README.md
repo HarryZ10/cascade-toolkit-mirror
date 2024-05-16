@@ -1,5 +1,7 @@
 # Cascade Content Verification Platform
 
+Disclaimer: All contributions were made by Harry (me) - this project ported over from Gitlab, which includes merge requests approved by @Peter Crackenberg, my supervisor.
+
 This project is a containerized `Vue.js` and `Node.js` full-stack web application that interacts with the Hannon Hill Cascade Content Management System (CMS) API to automate the verification of content accuracy and validity.
 
 Given a list of URLS separated by new lines and a timeframe in date time format `01-01-1994`, the API will populate page information that only includes pages modified during the time frame specified. This streamlines the previous tedious and manual process of ensuring that the content in Cascade is up-to-date and correct.
